@@ -3163,7 +3163,7 @@ static void synaptics_rmi4_set_params(struct synaptics_rmi4_data *rmi4_data)
 	struct synaptics_rmi4_device_info *rmi;
 
 	rmi = &(rmi4_data->rmi4_mod_info);
-
+    set_bit(INPUT_PROP_DIRECT, rmi4_data->input_dev->propbit);
 	input_set_abs_params(rmi4_data->input_dev,
 			ABS_MT_POSITION_X, 0,
 			rmi4_data->sensor_max_x, 0, 0);
@@ -3266,9 +3266,7 @@ static int synaptics_rmi4_set_input_dev(struct synaptics_rmi4_data *rmi4_data)
 	set_bit(EV_ABS, rmi4_data->input_dev->evbit);
 	set_bit(BTN_TOUCH, rmi4_data->input_dev->keybit);
 	set_bit(BTN_TOOL_FINGER, rmi4_data->input_dev->keybit);
-#ifdef INPUT_PROP_DIRECT
 	set_bit(INPUT_PROP_DIRECT, rmi4_data->input_dev->propbit);
-#endif
 
 	if (bdata->max_y_for_2d >= 0)
 		rmi4_data->sensor_max_y = bdata->max_y_for_2d;
@@ -3308,9 +3306,7 @@ static int synaptics_rmi4_set_input_dev(struct synaptics_rmi4_data *rmi4_data)
 	set_bit(BTN_TOOL_PEN, rmi4_data->stylus_dev->keybit);
 	if (rmi4_data->eraser_enable)
 		set_bit(BTN_TOOL_RUBBER, rmi4_data->stylus_dev->keybit);
-#ifdef INPUT_PROP_DIRECT
 	set_bit(INPUT_PROP_DIRECT, rmi4_data->stylus_dev->propbit);
-#endif
 
 	input_set_abs_params(rmi4_data->stylus_dev, ABS_X, 0,
 			rmi4_data->sensor_max_x, 0, 0);

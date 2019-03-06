@@ -2600,6 +2600,7 @@ static void synaptics_rmi4_set_params(struct synaptics_rmi4_data *rmi4_data)
 			rmi4_data->hw_if->board_data;
 
 	rmi = &(rmi4_data->rmi4_mod_info);
+    set_bit(INPUT_PROP_DIRECT, rmi4_data->input_dev->propbit);
 
 	if (bdata->disp_maxx && bdata->disp_maxy) {
 		input_set_abs_params(rmi4_data->input_dev, ABS_MT_POSITION_X,
@@ -2968,9 +2969,7 @@ static int synaptics_rmi4_set_input_dev(struct synaptics_rmi4_data *rmi4_data)
 	set_bit(EV_ABS, rmi4_data->input_dev->evbit);
 	set_bit(BTN_TOUCH, rmi4_data->input_dev->keybit);
 	set_bit(BTN_TOOL_FINGER, rmi4_data->input_dev->keybit);
-#ifdef INPUT_PROP_DIRECT
 	set_bit(INPUT_PROP_DIRECT, rmi4_data->input_dev->propbit);
-#endif
 
 	if (rmi4_data->hw_if->board_data->swap_axes) {
 		temp = rmi4_data->sensor_max_x;
